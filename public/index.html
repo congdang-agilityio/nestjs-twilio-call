@@ -13,7 +13,7 @@
     let device;
 
     async function setupDevice() {
-      const res = await fetch('/api/token?identity=web-user');
+      const res = await fetch('/api/token.ts?identity=web-user');
       const data = await res.json();
 
       device = new Twilio.Device(data.token, { debug: true });
