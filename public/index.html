@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twilio Web Dialer</title>
+  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
+</head>
+<body>
+  <h1>Twilio Web Dialer</h1>
+  <input id="phone-number" placeholder="Enter phone number" />
+  <button onclick="call()">Call</button>
+  <button onclick="hangup()">Hang Up</button>
+  <p id="status"></p>
+
+  <script>
+    let device;
+
+    fetch('/api/token')
+      .then(res => res.json())
+      .then(data => {
+        Twilio.Device.setup(data.token);
+
+        Twilio.Device.ready(() => {
+          document.getElementById('status').innerText = 'Ready to make calls';
+        });
+
+        Twilio.Device.error((err) => {
+          console.error('Twilio Error:', err);
+        });
+      });
+
+    function call() {
+      const number = document.getElementById('phone-number').value;
+      Twilio.Device.connect({ To: number });
+    }
+
+    function hangup() {
+      Twilio.Device.disconnectAll();
+    }
+  </script>
+</body>
+</html>
