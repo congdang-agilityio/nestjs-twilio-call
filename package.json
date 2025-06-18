@@ -1,15 +1,11 @@
 {
   "name": "nestjs-twilio-call",
   "version": "1.0.0",
-  "scripts": {
-    "dev": "vercel dev",
-    "start": "node index.js"
-  },
   "dependencies": {
-    "@vercel/node": "^1.13.1",
-    "twilio": "^4.13.0"
+    "twilio": "^4.0.0"
   },
   "devDependencies": {
-    "jest": "^29.0.0"
+    "@vercel/node": "^1.14.0",
+    "typescript": "^5.0.0"
   }
 }

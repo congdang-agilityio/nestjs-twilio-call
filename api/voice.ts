@@ -3,11 +3,15 @@ import twilio from 'twilio';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const twiml = new twilio.twiml.VoiceResponse();
-  const to = req.body?.To;
+  const to = req.query.To?.toString();
 
-  const dial = twiml.dial();
-  dial.number(to);
+  if (to) {
+    const dial = twiml.dial();
+    dial.number(to);
+  } else {
+    twiml.say('Thanks for calling!');
+  }
 
   res.setHeader('Content-Type', 'text/xml');
-  res.send(twiml.toString());
+  res.status(200).send(twiml.toString());
 }

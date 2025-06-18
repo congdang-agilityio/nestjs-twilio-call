@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Twilio Web Dialer</title>
-  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
+  <title>Twilio Call</title>
+  <script src="https://media.twiliocdn.com/sdk/js/client/v1.13/twilio.min.js"></script>
 </head>
 <body>
-  <h1>Twilio Web Dialer</h1>
-  <input id="phone-number" placeholder="Enter phone number" />
+  <h2>📞 Call someone!</h2>
+  <input type="text" id="number" placeholder="+84123456789" />
   <button onclick="call()">Call</button>
-  <button onclick="hangup()">Hang Up</button>
-  <p id="status"></p>
 
   <script>
     let device;
 
-    fetch('/api/token')
-      .then(res => res.json())
-      .then(data => {
-        Twilio.Device.setup(data.token);
+    async function setupDevice() {
+      const res = await fetch('/api/token?identity=web-user');
+      const data = await res.json();
 
-        Twilio.Device.ready(() => {
-          document.getElementById('status').innerText = 'Ready to make calls';
-        });
+      device = new Twilio.Device(data.token, { debug: true });
 
-        Twilio.Device.error((err) => {
-          console.error('Twilio Error:', err);
-        });
-      });
-
-    function call() {
-      const number = document.getElementById('phone-number').value;
-      Twilio.Device.connect({ To: number });
+      device.on('ready', () => console.log('Twilio.Device Ready'));
+      device.on('error', error => console.error('Twilio.Device Error:', error));
+      device.on('connect', conn => console.log('Call connected'));
+      device.on('disconnect', conn => console.log('Call ended'));
     }
 
-    function hangup() {
-      Twilio.Device.disconnectAll();
+    async function call() {
+      if (!device) await setupDevice();
+      const number = document.getElementById('number').value;
+      device.connect({ To: number });
     }
+
+    setupDevice();
   </script>
 </body>
 </html>
