@@ -1,6 +1,9 @@
 {
   "name": "nestjs-twilio-call",
   "version": "1.0.0",
+  "scripts": {
+  "build": "tsc"
+},
   "dependencies": {
     "twilio": "^4.0.0"
   },
