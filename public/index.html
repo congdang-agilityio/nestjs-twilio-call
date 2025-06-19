@@ -28,7 +28,7 @@
       if (!device) await setupDevice();
       const number = document.getElementById('number').value;
       console.log(number);
-      device.connect({ To: number });
+      device.connect({ To: number.toString() });
     }
 
     setupDevice();
