@@ -3,7 +3,7 @@ import twilio from 'twilio';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const twiml = new twilio.twiml.VoiceResponse();
-  const to = '+84987627151'; //req.query.To?.toString();
+  const to = '+84907627151'; //req.query.To?.toString();
   console.log("Calling number: ", to);
 
   if (to) {
