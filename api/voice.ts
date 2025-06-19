@@ -7,8 +7,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   let to = req.body.To?.toString();
   console.log("Calling number: ", to);
 
-  if (!to) {
-    to = '+84907627151';
+  if (to) {
     console.log('dialing');
     const dial = twiml.dial({
       callerId: '+84907627151'
