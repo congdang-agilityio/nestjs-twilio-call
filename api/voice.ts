@@ -4,8 +4,10 @@ import twilio from 'twilio';
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const twiml = new twilio.twiml.VoiceResponse();
   const to = req.query.To?.toString();
+  console.log(to);
 
   if (to) {
+    console.log('dialing');
     const dial = twiml.dial();
     dial.number(to);
   } else {
