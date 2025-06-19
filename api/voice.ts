@@ -2,9 +2,9 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import twilio from 'twilio';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
-  console.log("Request received: ", req.query);
+  console.log("Request received: ", req.body);
   const twiml = new twilio.twiml.VoiceResponse();
-  let to = req.query.To?.toString();
+  let to = req.body.To?.toString();
   console.log("Calling number: ", to);
 
   if (!to) {
