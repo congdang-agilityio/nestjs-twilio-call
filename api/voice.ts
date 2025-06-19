@@ -10,7 +10,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   if (to) {
     console.log('dialing');
     const dial = twiml.dial({
-      callerId: '+84907627151'
+      callerId: process.env.TWILIO_CALLER_ID!
     });
     dial.number(to);
   } else {
