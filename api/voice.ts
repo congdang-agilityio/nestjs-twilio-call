@@ -2,13 +2,17 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import twilio from 'twilio';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
+  console.log("Request received: ", req.query);
   const twiml = new twilio.twiml.VoiceResponse();
-  const to = req.query.To?.toString();
+  let to = req.query.To?.toString();
   console.log("Calling number: ", to);
 
-  if (to) {
+  if (!to) {
+    to = '+84907627151';
     console.log('dialing');
-    const dial = twiml.dial();
+    const dial = twiml.dial({
+      callerId: '+84907627151'
+    });
     dial.number(to);
   } else {
     twiml.say('Thanks for calling!');
